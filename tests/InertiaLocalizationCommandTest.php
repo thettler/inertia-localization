@@ -1,4 +1,5 @@
 <?php
+
 afterEach(function () {
     \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations');
 });

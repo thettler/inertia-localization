@@ -1,6 +1,7 @@
 <?php
 
 use Thettler\InertiaLocalization\InertiaLocalizationGenerator;
+
 afterEach(function () {
     \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations');
 });
