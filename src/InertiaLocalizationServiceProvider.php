@@ -28,7 +28,7 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
     public function registeringPackage()
     {
         $this->app->singleton(Mutator::class, fn (Application $app) => new InertiaLocalizationTranslationMutator(
-            jsFunctionCase: config('inertia-localization.js.framework'),
+            jsFunctionCase: config('inertia-localization.js.function_case'),
             reservedKeywordSuffix: config('inertia-localization.js.reserved_keyword_suffix'),
         ));
 
