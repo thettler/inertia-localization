@@ -71,7 +71,7 @@ class InertiaLocalizationLoader implements Loader
     {
         return match ($this->jsFunctionCase) {
             JsFunctionCase::Camel => Str::camel($name),
-            JsFunctionCase::Pascal => Str::pascal($name),
+            JsFunctionCase::Pascal => Str::studly($name),
             default => $name,
         };
     }
