@@ -43,6 +43,5 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
             locales: config('inertia-localization.locales'),
         ));
 
-
     }
 }
