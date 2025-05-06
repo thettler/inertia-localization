@@ -4,9 +4,9 @@ use Thettler\InertiaLocalization\InertiaLocalizationGenerator;
 
 it('can generate the js files', function () {
 
-    new InertiaLocalizationGenerator(
+    (new InertiaLocalizationGenerator(
         locales: ['de', 'en'],
-    )
+    ))
         ->generate(__DIR__.'/fake_filesystem/translations', [
             'website' => [
                 'my_translation' => [
@@ -27,9 +27,9 @@ it('can generate the js files', function () {
     ->after(fn () => \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations'));
 
 it('can generate the utils.js', function () {
-    $jsCode = new InertiaLocalizationGenerator(
+    $jsCode = (new InertiaLocalizationGenerator(
         locales: ['de', 'en'],
-    )
+    ))
         ->generateUtilsJs();
 
     expect($jsCode)->toBeString()
@@ -41,9 +41,9 @@ it('can generate the utils.js', function () {
 });
 
 it('can generate the index.js', function () {
-    $jsCode = new InertiaLocalizationGenerator(
+    $jsCode = (new InertiaLocalizationGenerator(
         locales: ['de', 'en'],
-    )
+    ))
         ->generateIndexJs([
             'group' => [],
             'website' => [],
@@ -55,9 +55,9 @@ it('can generate the index.js', function () {
 });
 
 it('can generate the group.js for translations', function () {
-    $jsCode = new InertiaLocalizationGenerator(
+    $jsCode = (new InertiaLocalizationGenerator(
         locales: ['de', 'en'],
-    )
+    ))
         ->generateTranslationFunctions([
             'my_translation' => [
                 'de' => 'Wert',
@@ -74,9 +74,9 @@ it('can generate the group.js for translations', function () {
 });
 
 it('can generate the group.js for translation with attribute', function () {
-    $jsCode = new InertiaLocalizationGenerator(
+    $jsCode = (new InertiaLocalizationGenerator(
         locales: ['de', 'en'],
-    )
+    ))
         ->generateTranslationFunctions([
             'my_translation' => [
                 'de' => 'Wert :attribute',
