@@ -21,8 +21,6 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
         $package
             ->name('inertia-localization')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_inertia_localization_table')
             ->hasCommand(InertiaLocalizationCommand::class);
     }
 
