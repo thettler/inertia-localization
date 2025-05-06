@@ -68,7 +68,7 @@ it('can generate the group.js for translations', function () {
     expect($jsCode)
         ->toBeString()
         ->toContain("import { findTranslation } from './utils.js';")
-        ->toContain("export function my_translation(locale = undefined) {\n")
+        ->toContain('export function my_translation(locale = undefined) {')
         ->toContain('"de":"Wert"')
         ->toContain('"en":"value"');
 });
@@ -89,7 +89,7 @@ it('can generate the group.js for translation with attribute', function () {
         ->toContain("import { findTranslation } from './utils.js';")
         ->toContain("* @param {Object} params\n")
         ->toContain("* @param {String} [params.attribute]\n")
-        ->toContain("export function my_translation(params = {}, locale = undefined) {\n")
+        ->toContain('export function my_translation(params = {}, locale = undefined) {')
         ->toContain('"de":"Wert :attribute"')
         ->toContain('"en":"value :attribute"');
 });
