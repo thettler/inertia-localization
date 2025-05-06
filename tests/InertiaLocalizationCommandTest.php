@@ -9,4 +9,4 @@ test('can generate a translation.js file ', function () {
 
     $this->artisan('inertia-localization:generate')
         ->assertSuccessful();
-})->after(fn () => \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations'));
+});
