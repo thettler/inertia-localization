@@ -1,6 +1,9 @@
 <?php
 
 use Thettler\InertiaLocalization\InertiaLocalizationGenerator;
+afterEach(function () {
+    \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations');
+});
 
 it('can generate the js files', function () {
 
@@ -23,8 +26,7 @@ it('can generate the js files', function () {
     expect(file_exists(__DIR__.'/fake_filesystem/translations/website.js'))->toBeTrue()
         ->and(file_exists(__DIR__.'/fake_filesystem/translations/utils.js'))->toBeTrue()
         ->and(file_exists(__DIR__.'/fake_filesystem/translations/index.js'))->toBeTrue();
-})
-    ->after(fn () => \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations'));
+});
 
 it('can generate the utils.js', function () {
     $jsCode = (new InertiaLocalizationGenerator(

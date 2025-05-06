@@ -1,5 +1,7 @@
 <?php
-
+afterEach(function () {
+    \Illuminate\Support\Facades\File::deleteDirectory(__DIR__.'/fake_filesystem/translations');
+});
 test('can generate a translation.js file ', function () {
     app()->instance('path.lang', \Pest\testDirectory('/fixtures/lang'));
     config()->set('inertia-localization.js.path', __DIR__.'/fake_filesystem/translations');
