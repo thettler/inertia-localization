@@ -3,11 +3,13 @@
 use Thettler\InertiaLocalization\Enums\JsFunctionCase;
 use Thettler\InertiaLocalization\Exceptions\FaultyConfigException;
 use Thettler\InertiaLocalization\InertiaLocalizationLoader;
+use Thettler\InertiaLocalization\InertiaLocalizationTranslationMutator;
 
 use function Pest\testDirectory;
 
 it('can load translations and return them in the correct format', function () {
     $translations = (new InertiaLocalizationLoader(
+        mutator: new InertiaLocalizationTranslationMutator,
         locales: ['de', 'en']
     ))
         ->load(testDirectory('fixtures/lang'));
@@ -45,6 +47,7 @@ it('can load translations and return them in the correct format', function () {
 
 it('can ignore groups', function () {
     $translations = (new InertiaLocalizationLoader(
+        mutator: new InertiaLocalizationTranslationMutator,
         locales: ['de', 'en'],
         ignoredGroups: ['website']
     ))
@@ -62,45 +65,9 @@ it('can ignore groups', function () {
         ]);
 });
 
-it('can change translation keys to different keys', function () {
-    $translations = (new InertiaLocalizationLoader(locales: ['en']))
-        ->load(testDirectory('fixtures/lang'));
-
-    expect($translations['website'])
-        ->toHaveKey('nested_translation')
-        ->toHaveKey('with_attribute');
-
-    $translations = (new InertiaLocalizationLoader(
-        locales: ['en'],
-        jsFunctionCase: JsFunctionCase::Snake
-    ))
-        ->load(testDirectory('fixtures/lang'));
-
-    expect($translations['website'])
-        ->toHaveKey('nested_translation')
-        ->toHaveKey('with_attribute');
-
-    $translations = (new InertiaLocalizationLoader(
-        locales: ['en'],
-        jsFunctionCase: JsFunctionCase::Pascal
-    ))
-        ->load(testDirectory('fixtures/lang'));
-
-    expect($translations['website'])
-        ->toHaveKey('NestedTranslation')
-        ->toHaveKey('WithAttribute');
-
-    $translations = (new InertiaLocalizationLoader(
-        locales: ['en'],
-        jsFunctionCase: JsFunctionCase::Camel
-    ))
-        ->load(testDirectory('fixtures/lang'));
-
-    expect($translations['website'])
-        ->toHaveKey('nestedTranslation')
-        ->toHaveKey('withAttribute');
-});
-
 it('throws error if lang directory does not exist', function () {
-    (new InertiaLocalizationLoader)->load('lang/does/not/exist');
+    (new InertiaLocalizationLoader(
+        mutator: new InertiaLocalizationTranslationMutator,
+    ))
+        ->load('lang/does/not/exist');
 })->throws(FaultyConfigException::class, "Language directory 'lang/does/not/exist' does not exist.");

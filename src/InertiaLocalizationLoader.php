@@ -6,15 +6,16 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
 use Thettler\InertiaLocalization\Contracts\Loader;
+use Thettler\InertiaLocalization\Contracts\Mutator;
 use Thettler\InertiaLocalization\Enums\JsFunctionCase;
 use Thettler\InertiaLocalization\Exceptions\FaultyConfigException;
 
 class InertiaLocalizationLoader implements Loader
 {
     public function __construct(
+        protected Mutator $mutator,
         protected array $locales = [],
         protected array $ignoredGroups = [],
-        protected JsFunctionCase $jsFunctionCase = JsFunctionCase::Snake,
     ) {}
 
     public function load(string $langPath): array
@@ -33,7 +34,7 @@ class InertiaLocalizationLoader implements Loader
             ])
             ->toArray();
 
-        return $this->restructureTranslations($translations);
+        return $this->mutator->restructure($translations);
     }
 
     protected function loadDirectory(string $path): array
@@ -51,51 +52,5 @@ class InertiaLocalizationLoader implements Loader
             ->toArray();
     }
 
-    protected function restructureTranslations(array $rawTranslations): array
-    {
-        $translations = [];
-        foreach ($rawTranslations as $locale => $translationGroups) {
-            foreach ($translationGroups as $group => $groupTranslations) {
-                $groupTranslations = $this->flattenTranslations($groupTranslations);
 
-                foreach ($groupTranslations as $key => $value) {
-                    $translations[$group][$this->modifyTranslationName($key)][$locale] = $value;
-                }
-            }
-        }
-
-        return $translations;
-    }
-
-    protected function modifyTranslationName(string $name): string
-    {
-        return match ($this->jsFunctionCase) {
-            JsFunctionCase::Camel => Str::camel($name),
-            JsFunctionCase::Pascal => Str::studly($name),
-            default => $name,
-        };
-    }
-
-    protected function flattenTranslations(array|string $array, $keySeparator = '_'): string|array
-    {
-        if (! is_array($array)) {
-            return $array;
-        }
-
-        foreach ($array as $name => $value) {
-            $translations = $this->flattenTranslations($value);
-
-            if (! is_array($translations)) {
-                continue;
-            }
-
-            foreach ($translations as $key => $val) {
-                $array[$name.$keySeparator.$key] = $val;
-            }
-
-            unset($array[$name]);
-        }
-
-        return $array;
-    }
 }

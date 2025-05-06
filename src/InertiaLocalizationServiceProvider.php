@@ -8,6 +8,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Thettler\InertiaLocalization\Commands\InertiaLocalizationCommand;
 use Thettler\InertiaLocalization\Contracts\Generator;
 use Thettler\InertiaLocalization\Contracts\Loader;
+use Thettler\InertiaLocalization\Contracts\Mutator;
 
 class InertiaLocalizationServiceProvider extends PackageServiceProvider
 {
@@ -26,15 +27,22 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
 
     public function registeringPackage()
     {
+        $this->app->singleton(Mutator::class, fn (Application $app) => new InertiaLocalizationTranslationMutator(
+            jsFunctionCase: config('inertia-localization.js.framework'),
+            reservedKeywordSuffix: config('inertia-localization.js.reserved_keyword_suffix'),
+        ));
+
         $this->app->singleton(Loader::class, fn (Application $app) => new InertiaLocalizationLoader(
             locales: config('inertia-localization.locales'),
             ignoredGroups: config('inertia-localization.ignored_groups'),
-            jsFunctionCase: config('inertia-localization.js.function_case')
+            mutator: app(Mutator::class)
         ));
 
         $this->app->singleton(Generator::class, fn (Application $app) => new InertiaLocalizationGenerator(
             jsFramework: config('inertia-localization.js.framework'),
             locales: config('inertia-localization.locales'),
         ));
+
+
     }
 }
