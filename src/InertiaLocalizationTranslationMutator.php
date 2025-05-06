@@ -68,14 +68,13 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
         'synchronized',
         'throws',
         'transient',
-        'volatile'
+        'volatile',
     ];
 
     public function __construct(
         protected JsFunctionCase $jsFunctionCase = JsFunctionCase::Snake,
         protected string $reservedKeywordSuffix = '_',
-    ) {
-    }
+    ) {}
 
     public function restructure(array $rawTranslations): array
     {
@@ -110,14 +109,14 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
 
     protected function flattenTranslations(array|string $array, $keySeparator = '_'): string|array
     {
-        if (!is_array($array)) {
+        if (! is_array($array)) {
             return $array;
         }
 
         foreach ($array as $name => $value) {
             $translations = $this->flattenTranslations($value);
 
-            if (!is_array($translations)) {
+            if (! is_array($translations)) {
                 continue;
             }
 

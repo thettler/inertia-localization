@@ -1,6 +1,5 @@
 <?php
 
-use Thettler\InertiaLocalization\Enums\JsFunctionCase;
 use Thettler\InertiaLocalization\Exceptions\FaultyConfigException;
 use Thettler\InertiaLocalization\InertiaLocalizationLoader;
 use Thettler\InertiaLocalization\InertiaLocalizationTranslationMutator;

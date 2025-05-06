@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
 use Thettler\InertiaLocalization\Contracts\Loader;
 use Thettler\InertiaLocalization\Contracts\Mutator;
-use Thettler\InertiaLocalization\Enums\JsFunctionCase;
 use Thettler\InertiaLocalization\Exceptions\FaultyConfigException;
 
 class InertiaLocalizationLoader implements Loader
@@ -51,6 +50,4 @@ class InertiaLocalizationLoader implements Loader
             ])
             ->toArray();
     }
-
-
 }
