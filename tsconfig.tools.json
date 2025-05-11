@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "noEmit": true,
+    "downlevelIteration": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "moduleResolution": "Node",
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "LF",
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "useDefineForClassFields": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "js/**/*.js",
+    "js/**/*.ts"
+  ],
+  "exclude": [
+    "**/dist",
+    "**/node_modules"
+  ]
+}

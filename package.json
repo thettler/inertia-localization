@@ -1,0 +1,43 @@
+{
+  "name": "vite-plugin-inertia-localization",
+  "version": "0.1.6",
+  "description": "Vite/Rollup plugin to detect used translations in used files",
+  "type": "module",
+  "main": "./build/js/src/index.cjs",
+  "module": "./build/js/src/index.mjs",
+  "types": "./build/js/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/js/src/index.d.ts",
+      "import": "./build/js/src/index.mjs",
+      "require": "./build/js/src/index.cjs"
+    }
+  },
+  "files": [
+    "build/js/src"
+  ],
+  "scripts": {
+    "prepack": "unbuild",
+    "test": "vitest"
+  },
+  "keywords": [
+    "vite",
+    "rollup"
+  ],
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "micromatch": "^4.0.8"
+  },
+  "devDependencies": {
+    "@types/micromatch": "^4.0.9",
+    "@types/node": "^22.10.2",
+    "rollup": "^4.29.1",
+    "typescript": "^5.7.2",
+    "unbuild": "^3.0.1",
+    "vite": "^6.0.6",
+    "vitest": "^3.0.8"
+  },
+  "peerDependencies": {
+    "vite": ">=2.0.0"
+  }
+}

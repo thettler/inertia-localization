@@ -17,7 +17,7 @@ class InertiaLocalizationLoader implements Loader
         protected array $ignoredGroups = [],
     ) {}
 
-    public function load(string $langPath): array
+    public function load(string $langPath): Translations
     {
         if (! File::exists($langPath)) {
             throw new FaultyConfigException("Language directory '{$langPath}' does not exist.");

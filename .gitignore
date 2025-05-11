@@ -4,6 +4,13 @@ composer.lock
 
 # Frontend Assets
 /node_modules
+.DS_Store
+dist
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Logs
 npm-debug.log

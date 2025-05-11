@@ -1,6 +1,9 @@
 <?php
 
+use Thettler\InertiaLocalization\Enums\Mode;
+
 return [
+    'mode' => Mode::Static,
     'locales' => [
         config('app.locale'),
         config('app.fallback_locale'),

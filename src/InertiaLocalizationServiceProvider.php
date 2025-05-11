@@ -3,6 +3,7 @@
 namespace Thettler\InertiaLocalization;
 
 use Illuminate\Contracts\Foundation\Application;
+use Inertia\Inertia;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Thettler\InertiaLocalization\Commands\InertiaLocalizationCommand;
@@ -41,7 +42,30 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
         $this->app->singleton(Generator::class, fn (Application $app) => new InertiaLocalizationGenerator(
             jsFramework: config('inertia-localization.js.framework'),
             locales: config('inertia-localization.locales'),
+            mode: config('inertia-localization.mode')
         ));
+    }
 
+    public function packageBooted()
+    {
+        Inertia::share('translations', function () {
+            return collect(
+                app(Loader::class)
+                    ->load(app('path.lang'))
+                    ->grouped()
+            )
+                ->map(fn (array $translations) => collect($translations)->mapWithKeys(
+                    fn (Translation $translation) => [
+                        $translation->originalKey => collect(config('inertia-localization.locales'))->mapWithKeys(
+                            fn (string $locale) => [$locale =>trans(
+                                key: $translation->getFullOriginalKey(),
+                                locale: $locale
+                            )]
+                        ),
+                    ]
+                )
+                )
+                ->toArray();
+        });
     }
 }

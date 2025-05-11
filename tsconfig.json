@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "ES2019",
+    "downlevelIteration": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "moduleResolution": "Node",
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "LF",
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "declaration": true,
+    "rootDir": "js/src",
+    "outDir": "dist",
+    "module": "ES2020"
+  },
+  "include": [
+    "js/src"
+  ]
+}

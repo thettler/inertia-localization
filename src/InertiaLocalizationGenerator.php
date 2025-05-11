@@ -2,42 +2,55 @@
 
 namespace Thettler\InertiaLocalization;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
+use Thettler\InertiaLocalization\Contracts\Generator;
 use Thettler\InertiaLocalization\Enums\JsFramework;
+use Thettler\InertiaLocalization\Enums\Mode;
 
-class InertiaLocalizationGenerator implements \Thettler\InertiaLocalization\Contracts\Generator
+class InertiaLocalizationGenerator implements Generator
 {
     public function __construct(
         protected JsFramework $jsFramework = JsFramework::Vue,
         protected array $locales = [],
+        protected Mode $mode = Mode::Static,
     ) {}
 
-    public function generate(string $path, array $translations): void
+    public function generate(string $path, Translations $translations): void
     {
-        \Illuminate\Support\Facades\File::makeDirectory($path, recursive: true, force: true);
+        File::makeDirectory($path, recursive: true, force: true);
 
-        \Illuminate\Support\Facades\File::put($path.'/utils.js', $this->generateUtilsJs());
-        \Illuminate\Support\Facades\File::put($path.'/index.js', $this->generateIndexJs($translations));
-        foreach ($translations as $group => $groupTranslations) {
-            \Illuminate\Support\Facades\File::put(
+        File::put($path.'/utils.js', $this->generateUtilsJs());
+        File::put($path.'/index.js', $this->generateIndexJs($translations));
+
+        foreach ($translations->grouped() as $group => $groupTranslations) {
+            File::put(
                 $path."/{$group}.js",
                 $this->generateTranslationFunctions($groupTranslations)
             );
         }
     }
 
-    public function generateIndexJs(array $translations): string
+    public function generateIndexJs(Translations $translations): string
     {
-        return collect($translations)
+        return collect($translations->grouped())
             ->keys()
             ->map(fn (string $group) => "export * as {$group} from './{$group}.js';")
             ->implode("\n");
     }
 
+    /**
+     * @param  Translation[]  $groupTranslations
+     */
     public function generateTranslationFunctions(array $groupTranslations): string
     {
         $code = Str::of("import { findTranslation } from './utils.js';")
             ->newLine()
+            ->when(
+                $this->mode === Mode::Dynamic,
+                fn (Stringable $code) => $code->append($this->getInertiaPageImport())->newLine()
+            )
             ->append(
                 "/**
  * @typedef {{$this->getLocalType()}} Locale
@@ -45,8 +58,8 @@ class InertiaLocalizationGenerator implements \Thettler\InertiaLocalization\Cont
             )
             ->newLine(2);
 
-        foreach ($groupTranslations as $key => $value) {
-            $code = $code->append($this->generateTranslationFunction($key, $value));
+        foreach ($groupTranslations as $value) {
+            $code = $code->append($this->generateTranslationFunction($value));
         }
 
         return $code->toString();
@@ -56,13 +69,8 @@ class InertiaLocalizationGenerator implements \Thettler\InertiaLocalization\Cont
     {
         $stub = file_get_contents(__DIR__.'/templates/utils.stub.js');
 
-        $imports = match ($this->jsFramework) {
-            JsFramework::Vue => "import { usePage } from '@inertiajs/vue3'",
-        };
-
-        $get_locale = match ($this->jsFramework) {
-            JsFramework::Vue => 'usePage().props.locale',
-        };
+        $imports = $this->getInertiaPageImport();
+        $get_locale = $this->getInertiaPageProps().'.locale';
 
         return Str::of($stub)
             ->replace('/*% imports %*/', $imports)
@@ -72,10 +80,10 @@ class InertiaLocalizationGenerator implements \Thettler\InertiaLocalization\Cont
             ->toString();
     }
 
-    protected function generateTranslationFunction(string $key, array $value): string
+    protected function generateTranslationFunction(Translation $translation): string
     {
         $stub = file_get_contents(__DIR__.'/templates/translationFunction.stub.js');
-        $parameters = collect($value)
+        $parameters = collect($translation->translations)
             ->reduce(function (array $carry, string $string) {
                 preg_match_all('/:(\w+)/', $string, $matches);
 
@@ -100,8 +108,13 @@ class InertiaLocalizationGenerator implements \Thettler\InertiaLocalization\Cont
         }
 
         return Str::of($stub)
-            ->replace('/*% translations %*/', json_encode($value))
-            ->replace('/*% key %*/', $key)
+            ->replace(
+                '/*% translations %*/',
+                $this->mode === Mode::Static ? json_encode($translation->translations) : $this->getInertiaPageProps(
+                ).".translations.{$translation->group}[\"{$translation->originalKey}\"] || {}"
+            )
+            ->replace('/*% functionName %*/', $translation->key . " /*{$translation->getFullOriginalKey()}*/")
+            ->replace('/*% key %*/', $translation->originalKey)
             ->replace('/*% parameters_jsdoc %*/', $parametersJsDoc)
             ->replace('/*% parameters_param %*/', $parametersJsParameter)
             ->replace('/*% parameters %*/', $parametersJsVariable)
@@ -112,5 +125,19 @@ class InertiaLocalizationGenerator implements \Thettler\InertiaLocalization\Cont
     protected function getLocalType(): string
     {
         return implode('|', array_map(fn (string $locale) => "\"{$locale}\"", $this->locales));
+    }
+
+    protected function getInertiaPageProps(): string
+    {
+        return match ($this->jsFramework) {
+            JsFramework::Vue => 'usePage().props',
+        };
+    }
+
+    protected function getInertiaPageImport(): string
+    {
+        return match ($this->jsFramework) {
+            JsFramework::Vue => "import { usePage } from '@inertiajs/vue3'",
+        };
     }
 }

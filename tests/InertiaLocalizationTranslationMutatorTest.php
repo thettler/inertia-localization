@@ -13,9 +13,9 @@ it('can change translation keys to different keys', function () {
         ],
     ]);
 
-    expect($translations['website'])
-        ->toHaveKey('nested_translation')
-        ->toHaveKey('with_attribute');
+    expect($translations->group('website')->getAllKeys())
+        ->toContain('nested_translation')
+        ->toContain('with_attribute');
 
     $translations = (new InertiaLocalizationTranslationMutator(jsFunctionCase: JsFunctionCase::Snake))->restructure([
         'de' => [
@@ -26,9 +26,9 @@ it('can change translation keys to different keys', function () {
         ],
     ]);
 
-    expect($translations['website'])
-        ->toHaveKey('nested_translation')
-        ->toHaveKey('with_attribute');
+    expect($translations->group('website')->getAllKeys())
+        ->toContain('nested_translation')
+        ->toContain('with_attribute');
 
     $translations = (new InertiaLocalizationTranslationMutator(jsFunctionCase: JsFunctionCase::Pascal))->restructure([
         'de' => [
@@ -39,9 +39,9 @@ it('can change translation keys to different keys', function () {
         ],
     ]);
 
-    expect($translations['website'])
-        ->toHaveKey('NestedTranslation')
-        ->toHaveKey('WithAttribute');
+    expect($translations->group('website')->getAllKeys())
+        ->toContain('NestedTranslation')
+        ->toContain('WithAttribute');
 
     $translations = (new InertiaLocalizationTranslationMutator(jsFunctionCase: JsFunctionCase::Camel))->restructure([
         'de' => [
@@ -52,9 +52,9 @@ it('can change translation keys to different keys', function () {
         ],
     ]);
 
-    expect($translations['website'])
-        ->toHaveKey('nestedTranslation')
-        ->toHaveKey('withAttribute');
+    expect($translations->group('website')->getAllKeys())
+        ->toContain('nestedTranslation')
+        ->toContain('withAttribute');
 });
 
 it('can flatten alter reserved js keywords', function () {
@@ -67,7 +67,7 @@ it('can flatten alter reserved js keywords', function () {
     ]);
 
     foreach (InertiaLocalizationTranslationMutator::RESERVED_JS_KEYWORDS as $keyword) {
-        expect($translations['website'])
-            ->toHaveKey($keyword.'_');
+        expect($translations->group('website')->getAllKeys())
+            ->toContain($keyword.'_');
     }
 });
