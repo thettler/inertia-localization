@@ -48,12 +48,13 @@ class DynamicInertiaTranslationsMiddleware
         }
 
         Inertia::share(config('inertia-localization.dynamic.shared_prop_key'), function () {
+            $includedFromFile = File::exists(config('inertia-localization.dynamic.include_path'))
+                ? File::json(config('inertia-localization.dynamic.include_path'))
+                : [];
             return collect(
                 [
                     ...config('inertia-localization.dynamic.include'),
-                    ...(File::exists(config('inertia-localization.dynamic.include_path')) ? (File::json(
-                        config('inertia-localization.dynamic.include_path')
-                    ) ?? []) : []),
+                    ...$includedFromFile,
                 ]
             )
                 ->mapWithKeys(fn(string $translationKey) => [
