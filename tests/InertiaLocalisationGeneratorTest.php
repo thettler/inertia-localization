@@ -110,6 +110,7 @@ it('can generate the group.js for translations', function () {
         ->toBeString()
         ->toContain("import { findTranslation } from './utils.js';")
         ->toContain('export function my_translation /*group.my_translation*/(locale = undefined) {')
+        ->toContain('my_translation.originalKey = "group.my_translation"')
         ->toContain('"de":"Wert"')
         ->toContain('"en":"value"');
 });
