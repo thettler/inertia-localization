@@ -87,7 +87,7 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
                 $originalTranslationKeys = array_keys($this->flattenTranslations($rawGroupTranslations, '.'));
                 $index = 0;
                 foreach ($groupTranslations as $key => $value) {
-                    $key = $this->modifyTranslationName($key);
+                    $key = $this->modifyTranslationName($key, $locale);
                     $identifier = $group.'_'.$key;
                     $translationsArray[$identifier]['translations'][$locale] = $value;
                     $translationsArray[$identifier]['group'] = $group;
@@ -109,8 +109,9 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
         return $translations;
     }
 
-    protected function modifyTranslationName(string $name): string
+    protected function modifyTranslationName(string $name, string $locale): string
     {
+        $name = $this->cleanFunctionName($name, language: $locale);
         $translationName = match ($this->jsFunctionCase) {
             JsFunctionCase::Camel => Str::camel($name),
             JsFunctionCase::Pascal => Str::studly($name),
@@ -145,5 +146,16 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
         }
 
         return $array;
+    }
+
+    protected function cleanFunctionName(string $name, $language = 'en')
+    {
+        $name = $language ? Str::ascii($name, $language) : $name;
+        // Remove all characters that are not the separator, letters, numbers, or whitespace
+        $name = preg_replace('![^'.preg_quote('_').'\pL\pN\s]+!u', '_', $name);
+
+        // Replace all separator characters and whitespace by a single separator
+        $name = preg_replace('!['.preg_quote('_').'\s]+!u', '_', $name);
+        return trim($name, '_');
     }
 }
