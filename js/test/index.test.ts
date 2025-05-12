@@ -2,7 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import * as vite from 'vite'
 import { describe, expect, it, vi } from 'vitest'
-import unusedCode from '../src'
+import unusedCode from '../index'
 
 describe('vite-plugin-unused-code', () => {
 

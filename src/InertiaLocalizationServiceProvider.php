@@ -46,26 +46,5 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
         ));
     }
 
-    public function packageBooted()
-    {
-        Inertia::share('translations', function () {
-            return collect(
-                app(Loader::class)
-                    ->load(app('path.lang'))
-                    ->grouped()
-            )
-                ->map(fn (array $translations) => collect($translations)->mapWithKeys(
-                    fn (Translation $translation) => [
-                        $translation->originalKey => collect(config('inertia-localization.locales'))->mapWithKeys(
-                            fn (string $locale) => [$locale =>trans(
-                                key: $translation->getFullOriginalKey(),
-                                locale: $locale
-                            )]
-                        ),
-                    ]
-                )
-                )
-                ->toArray();
-        });
-    }
+
 }

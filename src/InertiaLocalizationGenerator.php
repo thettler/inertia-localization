@@ -70,7 +70,7 @@ class InertiaLocalizationGenerator implements Generator
         $stub = file_get_contents(__DIR__.'/templates/utils.stub.js');
 
         $imports = $this->getInertiaPageImport();
-        $get_locale = $this->getInertiaPageProps().'.locale';
+        $get_locale = $this->getInertiaPageProps().'.'.config('inertia-localization.js.current_locale_key');
 
         return Str::of($stub)
             ->replace('/*% imports %*/', $imports)
@@ -107,13 +107,15 @@ class InertiaLocalizationGenerator implements Generator
             ).PHP_EOL;
         }
 
+        $sharedPropKey = config('inertia-localization.dynamic.shared_prop_key');
+
         return Str::of($stub)
             ->replace(
                 '/*% translations %*/',
                 $this->mode === Mode::Static ? json_encode($translation->translations) : $this->getInertiaPageProps(
-                ).".translations.{$translation->group}[\"{$translation->originalKey}\"] || {}"
+                ).".{$sharedPropKey}[\"{$translation->group}.{$translation->originalKey}\"] || {}"
             )
-            ->replace('/*% functionName %*/', $translation->key . " /*{$translation->getFullOriginalKey()}*/")
+            ->replace('/*% functionName %*/', $translation->key." /*{$translation->getFullOriginalKey()}*/")
             ->replace('/*% key %*/', $translation->originalKey)
             ->replace('/*% parameters_jsdoc %*/', $parametersJsDoc)
             ->replace('/*% parameters_param %*/', $parametersJsParameter)

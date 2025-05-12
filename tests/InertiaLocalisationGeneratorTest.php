@@ -50,8 +50,8 @@ it('can generate the utils.js', function () {
     expect($jsCode)->toBeString()
         ->toContain('* @typedef {"de"|"en"} Locale')
         ->toContain("import { usePage } from '@inertiajs/vue3'")
-        ->toContain('usePage().props.locale !== undefined')
-        ->toContain('return usePage().props.locale;')
+        ->toContain('usePage().props.current_locale !== undefined')
+        ->toContain('return usePage().props.current_locale;')
         ->toContain('return "en";');
 });
 
@@ -160,5 +160,5 @@ it('can generate in dynamic mode', function () {
     expect($jsCode)
         ->toBeString()
         ->toContain("import { usePage } from '@inertiajs/vue3'")
-        ->toContain('usePage().props.translations.group["my.translation"] || {}');
+        ->toContain('usePage().props.translations["group.my.translation"] || {}');
 });

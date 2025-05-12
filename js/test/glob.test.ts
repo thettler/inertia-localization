@@ -1,7 +1,7 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { describe, expect, it } from 'vitest'
-import { filterGlobs, searchGlobs } from '../src'
+import { filterGlobs, searchGlobs } from '../index'
 
 describe('glob', () => {
 

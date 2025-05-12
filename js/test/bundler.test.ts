@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 import type { OutputBundle } from 'rollup'
 import * as vite from 'vite'
 import { describe, expect, it } from 'vitest'
-import { getModules } from '../src/index.js'
+import { getModules } from '../index.js'
 
 describe('bundler', () => {
 

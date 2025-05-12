@@ -92,7 +92,7 @@ const unusedCodePlugin = (customOptions) => {
         patterns: ['**/*.*'],
         exclude: ['**/utils.js'],
         dry: false,
-        jsonOutputPath: 'used-translations.json',
+        jsonOutputPath: 'storage/include-translations.json',
         ...customOptions,
     };
 
