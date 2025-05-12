@@ -2,6 +2,9 @@
 
 namespace Thettler\InertiaLocalization;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
 class InertiaLocalization
 {
     public function setCurrentLocale(string $locale): self
@@ -10,6 +13,8 @@ class InertiaLocalization
             config('inertia-localization.current_locale_session_key'),
             $locale
         );
+
+        App::setLocale($locale);
 
         return $this;
     }
