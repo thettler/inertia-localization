@@ -51,6 +51,7 @@ class DynamicInertiaTranslationsMiddleware
             $includedFromFile = File::exists(config('inertia-localization.dynamic.include_path'))
                 ? File::json(config('inertia-localization.dynamic.include_path'))
                 : [];
+
             return collect(
                 [
                     ...config('inertia-localization.dynamic.include'),
