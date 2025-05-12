@@ -3,7 +3,6 @@
 namespace Thettler\InertiaLocalization;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
 
 class InertiaLocalization
 {
