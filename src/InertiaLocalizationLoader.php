@@ -50,6 +50,4 @@ class InertiaLocalizationLoader implements Loader
             ])
             ->toArray();
     }
-
-
 }

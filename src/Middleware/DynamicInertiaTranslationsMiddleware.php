@@ -25,13 +25,13 @@ class DynamicInertiaTranslationsMiddleware
                         ->load(app('path.lang'))
                         ->grouped()
                 )
-                    ->flatMap(fn(array $translations) => collect($translations)->mapWithKeys(
-                        fn(Translation $translation) => [
+                    ->flatMap(fn (array $translations) => collect($translations)->mapWithKeys(
+                        fn (Translation $translation) => [
                             $translation->getFullOriginalKey() => collect(
                                 config('inertia-localization.locales')
                             )
                                 ->mapWithKeys(
-                                    fn(string $locale) => [
+                                    fn (string $locale) => [
                                         $locale => trans(
                                             key: $translation->getFullOriginalKey(),
                                             locale: $locale
@@ -56,9 +56,9 @@ class DynamicInertiaTranslationsMiddleware
                     ) ?? []) : []),
                 ]
             )
-                ->mapWithKeys(fn(string $translationKey) => [
+                ->mapWithKeys(fn (string $translationKey) => [
                     $translationKey => collect(config('inertia-localization.locales'))->mapWithKeys(
-                        fn(string $locale) => [
+                        fn (string $locale) => [
                             $locale => trans(
                                 key: $translationKey,
                                 locale: $locale

@@ -7,8 +7,7 @@ it('shares current locale', function () {
     expect($sharedProps)->toBeEmpty();
 
     app(\Thettler\InertiaLocalization\Middleware\InertiaTranslationsMiddleware::class)
-        ->handle(request(), function () {
-        });
+        ->handle(request(), function () {});
 
     $sharedProps = Inertia::getShared();
     expect($sharedProps[config('inertia-localization.js.current_locale_key')]())
@@ -17,8 +16,7 @@ it('shares current locale', function () {
     session()->put(config('inertia-localization.js.current_locale_key'), 'de');
 
     app(\Thettler\InertiaLocalization\Middleware\InertiaTranslationsMiddleware::class)
-        ->handle(request(), function () {
-        });
+        ->handle(request(), function () {});
 
     $sharedProps = Inertia::getShared();
     expect($sharedProps[config('inertia-localization.js.current_locale_key')]())

@@ -3,7 +3,6 @@
 namespace Thettler\InertiaLocalization;
 
 use Illuminate\Contracts\Foundation\Application;
-use Inertia\Inertia;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Thettler\InertiaLocalization\Commands\InertiaLocalizationCommand;
@@ -45,6 +44,4 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
             mode: config('inertia-localization.mode')
         ));
     }
-
-
 }

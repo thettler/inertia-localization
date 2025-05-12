@@ -4,7 +4,6 @@ namespace Thettler\InertiaLocalization;
 
 class InertiaLocalization
 {
-
     public function setCurrentLocale(string $locale): self
     {
         \Illuminate\Support\Facades\Session::put(
