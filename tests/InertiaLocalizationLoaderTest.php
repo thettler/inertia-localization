@@ -3,9 +3,7 @@
 use Thettler\InertiaLocalization\Exceptions\FaultyConfigException;
 use Thettler\InertiaLocalization\InertiaLocalizationLoader;
 use Thettler\InertiaLocalization\InertiaLocalizationTranslationMutator;
-
 use Thettler\InertiaLocalization\Translation;
-
 use Thettler\InertiaLocalization\Translations;
 
 use function Pest\testDirectory;

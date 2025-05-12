@@ -57,7 +57,7 @@ class InertiaLocalizationServiceProvider extends PackageServiceProvider
                 ->map(fn (array $translations) => collect($translations)->mapWithKeys(
                     fn (Translation $translation) => [
                         $translation->originalKey => collect(config('inertia-localization.locales'))->mapWithKeys(
-                            fn (string $locale) => [$locale =>trans(
+                            fn (string $locale) => [$locale => trans(
                                 key: $translation->getFullOriginalKey(),
                                 locale: $locale
                             )]

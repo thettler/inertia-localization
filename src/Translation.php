@@ -9,8 +9,7 @@ class Translation
         public readonly string $originalKey,
         public readonly string $group,
         public readonly array $translations,
-    ) {
-    }
+    ) {}
 
     public function getFullOriginalKey(): string
     {

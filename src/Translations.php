@@ -14,13 +14,14 @@ class Translations
     public function add(Translation $translation): self
     {
         $this->translations[] = $translation;
+
         return $this;
     }
 
     public function group(string $group): Translations
     {
         return new Translations(
-            ... array_filter($this->translations, fn(Translation $translation) => $translation->group === $group)
+            ...array_filter($this->translations, fn (Translation $translation) => $translation->group === $group)
         );
     }
 
@@ -31,6 +32,6 @@ class Translations
 
     public function getAllKeys(): array
     {
-        return array_map(fn(Translation $translation) => $translation->key, $this->translations);
+        return array_map(fn (Translation $translation) => $translation->key, $this->translations);
     }
 }

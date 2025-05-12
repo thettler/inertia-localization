@@ -113,7 +113,7 @@ class InertiaLocalizationGenerator implements Generator
                 $this->mode === Mode::Static ? json_encode($translation->translations) : $this->getInertiaPageProps(
                 ).".translations.{$translation->group}[\"{$translation->originalKey}\"] || {}"
             )
-            ->replace('/*% functionName %*/', $translation->key . " /*{$translation->getFullOriginalKey()}*/")
+            ->replace('/*% functionName %*/', $translation->key." /*{$translation->getFullOriginalKey()}*/")
             ->replace('/*% key %*/', $translation->originalKey)
             ->replace('/*% parameters_jsdoc %*/', $parametersJsDoc)
             ->replace('/*% parameters_param %*/', $parametersJsParameter)
