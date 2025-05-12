@@ -83,7 +83,7 @@ it('includes only translations from file', function () {
     app()->instance('path.lang', \Pest\testDirectory('/fixtures/lang'));
     config()->set('inertia-localization.mode', Mode::Dynamic);
     config()->set('app.env', 'prod');
-    config()->set('inertia-localization.dynamic.include_path', \Pest\testDirectory('/fixtures/include-translations.json'));;
+    config()->set('inertia-localization.dynamic.include_path', \Pest\testDirectory('/fixtures/include-translations.json'));
 
     $sharedProps = Inertia::getShared();
     expect($sharedProps)->toBeEmpty();

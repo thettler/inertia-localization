@@ -17,6 +17,7 @@ class InertiaTranslationsMiddleware
                 return session(config('inertia-localization.current_locale_session_key'), config('app.locale'));
             }
         );
+
         return $next($request);
     }
 }
