@@ -156,6 +156,7 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
 
         // Replace all separator characters and whitespace by a single separator
         $name = preg_replace('!['.preg_quote('_').'\s]+!u', '_', $name);
+
         return trim($name, '_');
     }
 }

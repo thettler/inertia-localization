@@ -78,8 +78,7 @@ it('can remove special characters form name', function () {
         ->toContain('some_plus')
         ->toContain('some_less')
         ->toContain('some_bigger')
-        ->toContain('sOme_equal')
-    ;
+        ->toContain('sOme_equal');
 
 });
 
