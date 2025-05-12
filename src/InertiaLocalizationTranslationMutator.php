@@ -2,7 +2,6 @@
 
 namespace Thettler\InertiaLocalization;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Thettler\InertiaLocalization\Enums\JsFunctionCase;
 
@@ -75,12 +74,11 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
     public function __construct(
         protected JsFunctionCase $jsFunctionCase = JsFunctionCase::Snake,
         protected string $reservedKeywordSuffix = '_',
-    ) {
-    }
+    ) {}
 
     public function restructure(array $rawTranslations): Translations
     {
-        $translations = new Translations();
+        $translations = new Translations;
         $translationsArray = [];
 
         foreach ($rawTranslations as $locale => $translationGroups) {
@@ -94,7 +92,7 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
                     $translationsArray[$identifier]['translations'][$locale] = $value;
                     $translationsArray[$identifier]['group'] = $group;
                     $translationsArray[$identifier]['key'] = $key;
-                    $translationsArray[$identifier]['originalKey'] = $originalTranslationKeys[$index];;
+                    $translationsArray[$identifier]['originalKey'] = $originalTranslationKeys[$index];
                     $index++;
                 }
             }
@@ -107,6 +105,7 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
                 )
             );
         }
+
         return $translations;
     }
 
@@ -127,14 +126,14 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
 
     protected function flattenTranslations(array|string $array, $keySeparator = '_'): string|array
     {
-        if (!is_array($array)) {
+        if (! is_array($array)) {
             return $array;
         }
 
         foreach ($array as $name => $value) {
             $translations = $this->flattenTranslations($value);
 
-            if (!is_array($translations)) {
+            if (! is_array($translations)) {
                 continue;
             }
 

@@ -1,8 +1,6 @@
 <?php
 
 use Inertia\Inertia;
-use Thettler\InertiaLocalization\Enums\Mode;
-use Thettler\InertiaLocalization\Middleware\DynamicInertiaTranslationsMiddleware;
 
 it('shares current locale', function () {
     $sharedProps = Inertia::getShared();

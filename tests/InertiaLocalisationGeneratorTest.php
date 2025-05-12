@@ -127,7 +127,7 @@ it('can generate the group.js for translation with attribute', function () {
                     'de' => 'Wert :attribute',
                     'en' => 'value :attribute',
                 ]
-            )
+            ),
         ]);
 
     expect($jsCode)
@@ -154,7 +154,7 @@ it('can generate in dynamic mode', function () {
                     'de' => 'Wert :attribute',
                     'en' => 'value :attribute',
                 ]
-            )
+            ),
         ]);
 
     expect($jsCode)
