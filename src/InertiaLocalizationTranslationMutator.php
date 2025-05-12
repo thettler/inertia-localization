@@ -132,7 +132,7 @@ class InertiaLocalizationTranslationMutator implements \Thettler\InertiaLocaliza
         }
 
         foreach ($array as $name => $value) {
-            $translations = $this->flattenTranslations($value);
+            $translations = $this->flattenTranslations($value, $keySeparator);
 
             if (! is_array($translations)) {
                 continue;

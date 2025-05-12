@@ -82,7 +82,7 @@ it('can remove special characters form name', function () {
 
 });
 
-it('can flatten alter reserved js keywords', function () {
+it('can alter reserved js keywords', function () {
     $translations = (new InertiaLocalizationTranslationMutator)->restructure([
         'de' => [
             'website' => collect(InertiaLocalizationTranslationMutator::RESERVED_JS_KEYWORDS)
@@ -95,4 +95,21 @@ it('can flatten alter reserved js keywords', function () {
         expect($translations->group('website')->getAllKeys())
             ->toContain($keyword.'_');
     }
+});
+
+it('can work with deep arrays', function () {
+    $translations = (new InertiaLocalizationTranslationMutator)->restructure([
+        'de' => [
+            'website' => [
+                'we' => [
+                    'go' => [
+                        'very' => 'deep',
+                    ],
+                ],
+            ],
+        ],
+    ]);
+
+    expect($translations->group('website')->getAllOriginalKeys()[0])
+        ->toBe('we.go.very');
 });

@@ -34,4 +34,8 @@ class Translations
     {
         return array_map(fn (Translation $translation) => $translation->key, $this->translations);
     }
+    public function getAllOriginalKeys(): array
+    {
+        return array_map(fn (Translation $translation) => $translation->originalKey, $this->translations);
+    }
 }
