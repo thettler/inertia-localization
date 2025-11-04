@@ -5,7 +5,6 @@ namespace Thettler\InertiaLocalization\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Thettler\InertiaLocalization\Contracts\Loader;
 use Thettler\InertiaLocalization\Enums\Mode;
