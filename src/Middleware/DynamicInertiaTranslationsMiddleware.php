@@ -33,10 +33,10 @@ class DynamicInertiaTranslationsMiddleware
                             )
                                 ->mapWithKeys(
                                     fn (string $locale) => [
-                                        $locale => Str::markdown(trans(
+                                        $locale => trans(
                                             key: $translation->getFullOriginalKey(),
                                             locale: $locale
-                                        )),
+                                        ),
                                     ]
                                 ),
                         ]
@@ -62,10 +62,10 @@ class DynamicInertiaTranslationsMiddleware
                 ->mapWithKeys(fn (string $translationKey) => [
                     $translationKey => collect(config('inertia-localization.locales'))->mapWithKeys(
                         fn (string $locale) => [
-                            $locale => Str::markdown(trans(
+                            $locale => trans(
                                 key: $translationKey,
                                 locale: $locale
-                            )),
+                            ),
                         ]
                     ),
                 ]
