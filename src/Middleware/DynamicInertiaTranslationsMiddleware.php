@@ -5,6 +5,7 @@ namespace Thettler\InertiaLocalization\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Thettler\InertiaLocalization\Contracts\Loader;
 use Thettler\InertiaLocalization\Enums\Mode;
@@ -32,10 +33,10 @@ class DynamicInertiaTranslationsMiddleware
                             )
                                 ->mapWithKeys(
                                     fn (string $locale) => [
-                                        $locale => trans(
+                                        $locale => Str::markdown(trans(
                                             key: $translation->getFullOriginalKey(),
                                             locale: $locale
-                                        ),
+                                        )),
                                     ]
                                 ),
                         ]
@@ -61,10 +62,10 @@ class DynamicInertiaTranslationsMiddleware
                 ->mapWithKeys(fn (string $translationKey) => [
                     $translationKey => collect(config('inertia-localization.locales'))->mapWithKeys(
                         fn (string $locale) => [
-                            $locale => trans(
+                            $locale => Str::markdown(trans(
                                 key: $translationKey,
                                 locale: $locale
-                            ),
+                            )),
                         ]
                     ),
                 ]
