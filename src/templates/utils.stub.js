@@ -26,8 +26,9 @@ export function trans(line, settings = {}) {
         shouldReplace[`:${key.toUpperCase()}`] = value?.toString().toUpperCase() || '';
         shouldReplace[`:${key}`] = value;
     }
+    const replacements= Object.entries(shouldReplace).sort((a, b) => b[0].length - a[0].length);
 
-    for (let [placeholder, replacement] of Object.entries(shouldReplace)) {
+    for (let [placeholder, replacement] of replacements) {
         line = line.split(placeholder).join(replacement);
     }
 
